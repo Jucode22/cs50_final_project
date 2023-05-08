@@ -1,0 +1,72 @@
+<div class="section" id="current_jobs">
+  {% if jobs|length == 0 %}
+  <h3>You have no jobs</h3>
+  {% else %}
+  <h3>Current Jobs:</h3>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Company</th>
+        <th>Commute</th>
+        <th>Salary</th>
+        <th>City</th>
+        <th>State</th>
+        <th>Status</th>
+        <th>Date Created</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for job in jobs %}
+      <tr
+        class="job-row"
+        data-bs-toggle="collapse"
+        data-bs-target="#job-details-{{ job[0] }}"
+        aria-expanded="false"
+        aria-controls="job-details-{{ job[0] }}">
+        <td>{{ job[2] }}</td>
+        <td>{{ job[3] }}</td>
+        <td>{{ job[7] }}</td>
+        <td>{{ job[6] }}</td>
+        <td>{{ job[9]}}</td>
+        <td>{{ job[8]}}</td>
+        <td>{{ job[12] }}</td>
+        <td>{{ job[15] }}</td>
+        <td>
+          <form
+            action="{{ url_for('update_job', job_id=job[0]) }}"
+            method="GET">
+            <button type="submit">Edit</button>
+          </form>
+        </td>
+        <td>
+          <form action="/remove_job" method="post">
+            <input name="id" type="hidden" value="{{ job[0] }}" />
+            <button type="submit">Remove</button>
+          </form>
+        </td>
+      </tr>
+      <tr class="job-details collapse" id="job-details-{{ job[0] }}">
+        <td colspan="10">
+          <ul class="list-group">
+            <li class="list-group-item"><b>Industry</b>: {{ job[4] }}</li>
+            <li class="list-group-item"><b>Job Board</b>: {{ job[10] }}</li>
+            <li class="list-group-item"><b>Job Link</b>: {{ job[11] }}</li>
+            <li class="list-group-item"><b>Job Type</b>: {{ job[16] }}</li>
+            <li class="list-group-item"><b>Date Posted</b>: {{ job[13] }}</li>
+            <li class="list-group-item"><b>Date Applied</b>: {{ job[14] }}</li>
+            <li class="list-group-item">
+              <b>Job Description</b>: {{ job[5] }}
+            </li>
+          </ul>
+        </td>
+      </tr>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %} {% if jobs|length > 0 %}
+<small>Click on your job for more details</small>
+{% endif %}

@@ -1,0 +1,133 @@
+{% extends "layout.html" %} {% block title %} Jobs {% endblock %} {% block main
+%}
+<div action="" class="container">
+  <div>
+    <form action="/search_jobs" method="GET" id="search-form">
+      <input
+        type="text"
+        name="q"
+        value=""
+        placeholder="Search..."
+        style="width: 30%"
+        height="6%" />
+
+      <button type="submit">Search</button>
+      <select
+        id="search_by"
+        name="search_by"
+        class="selectpicker"
+        multiple
+        title="Search By">
+        {% for item in form_items[:7] %}
+        <option value="{{ item['name'] }}">{{ item['placeholder'] }}</option>
+        {% endfor %}
+      </select>
+
+      <div class="dropdown">
+        <a onclick="openFilters()" class="btn btn-primary" id="filters-button"
+          >Filters</a
+        >
+        <div id="filters" style="display: none">
+          <br />
+          <div class="form-group">
+            <select
+              name="job_type"
+              class="selectpicker"
+              multiple
+              title="Job Type">
+              {% for job_type in job_types %}
+              <option value="{{ job_type }}">{{ job_type }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <br />
+          <div class="form-group">
+            <select
+              name="commute"
+              class="selectpicker"
+              multiple
+              title="Commute Type">
+              {% for c in commute %}
+              <option value="{{ c }}">{{ c }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <br />
+          <div class="form-group">
+            <select name="status" class="selectpicker" multiple title="Status">
+              {% for status in statuses %}
+              <option value="{{ status }}">{{ status }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <br />
+          <div class="form-group" id="date_created">
+            <label>Date Created</label>
+            <input
+              type="text"
+              name="created_date"
+              class="datefilter"
+              value="" />
+          </div>
+          <br />
+          <div class="form-group" id="date_posted">
+            <label>Date Posted</label>
+            <input type="text" name="date_posted" class="datefilter" value="" />
+          </div>
+          <br />
+          <div class="form-group" id="date_applied">
+            <label>Date Applied</label>
+            <input
+              type="text"
+              name="date_applied"
+              class="datefilter"
+              value="" />
+          </div>
+          <br />
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <script type="text/javascript">
+    $(function () {
+      $('input[class="datefilter"]').daterangepicker({
+        autoUpdateInput: false,
+        locale: {
+          cancelLabel: "Clear",
+        },
+      });
+
+      $('input[class="datefilter"]').on(
+        "apply.daterangepicker",
+        function (ev, picker) {
+          $(this).val(
+            picker.startDate.format("MM/DD/YYYY") +
+              " - " +
+              picker.endDate.format("MM/DD/YYYY")
+          );
+        }
+      );
+
+      $('input[class="datefilter"]').on(
+        "cancel.daterangepicker",
+        function (ev, picker) {
+          $(this).val("");
+        }
+      );
+    });
+
+    function openFilters() {
+      var x = document.getElementById("filters");
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+  </script>
+
+  <!-- <a href="/add_job" class="btn btn-primary">Add Job</a>-->
+  {% include 'current_jobs.html' %}
+</div>
+{% endblock %}

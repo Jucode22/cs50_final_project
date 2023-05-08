@@ -1,0 +1,186 @@
+{% extends "layout.html" %} {% block title %} Update Job {% endblock %} {% block
+main %}
+<div class="section" id="update_form">
+  <h2>Updating Job</h2>
+  <br />
+  <form action="/update_job/{{ job[0] }}" method="POST">
+    <div class="mb-3">
+      <td>Job Title:</td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          name="title"
+          value="{{ job[2] }}"
+          required />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Company:</td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          name="company"
+          value="{{ job[3] }}"
+          required />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Industry:</td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          name="industry"
+          value="{{ job[4] }}" />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Salary:</td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          name="salary"
+          value="{{ job[6] }}" />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>City:</td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          name="headquarter_city"
+          value="{{ job[9] }}" />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>State:</td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          name="headquarter_state"
+          value="{{ job[8] }}" />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Job Board:</td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          name="job_site"
+          value="{{ job[10] }}" />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Job Link:</td>
+      <td>
+        <input
+          type="text"
+          class="form-control"
+          name="job_link"
+          value="{{ job[11] }}" />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Job Type:</td>
+      <td>
+        <select class="form-control" name="job_type">
+          {% if job[16] == '' %}
+          <option value="" selected>--Select an option--</option>
+          {% endif %} {% for job_type in job_types %} {% if job_type == job[16]
+          %}
+          <option value="{{ job_type }}" selected>{{ job_type }}</option>
+          {% else %}
+          <option value="{{ job_type }}">{{ job_type }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Commute Type:</td>
+      <td>
+        <select class="form-control" name="commute">
+          {% if job[7] == '' %}
+          <option value="" selected>--Select an option--</option>
+          {% endif %} {% for c in commute %} {% if c == job[7] %}
+          <option value="{{ c }}" selected>{{ c }}</option>
+          {% else %}
+          <option value="{{ c }}">{{ c }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Current Status:</td>
+      <td>
+        <select class="form-control" name="status">
+          {% for status in statuses %} {% if status == job[12] %}
+          <option value="{{ status }}" selected>{{ status }}</option>
+          {% else %}
+          <option value="{{ status }}">{{ status }}</option>
+          {% endif %} {% endfor %}
+        </select>
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Date Posted:</td>
+      <td>
+        <input
+          type="date"
+          class="form-control"
+          name="date_posted"
+          value="{{ job[13] }}" />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Date Applied:</td>
+      <td>
+        <input
+          type="date"
+          class="form-control"
+          name="date_applied"
+          value="{{ job[14] }}" />
+      </td>
+    </div>
+
+    <div class="mb-3">
+      <td>Description:</td>
+      <td>
+        <textarea
+          class="form-control"
+          name="description"
+          placeholder="Copy and paste the job description here"
+          rows="4"
+          cols="50">
+{{ job[5] }}</textarea
+        >
+      </td>
+    </div>
+
+    <input type="submit" value="Save" />
+    <button
+      type="button"
+      onclick="window.location.href='{{ url_for('jobs') }}';">
+      Cancel
+    </button>
+  </form>
+</div>
+
+{% endblock %}

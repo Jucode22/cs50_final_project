@@ -1,0 +1,94 @@
+{% extends "layout.html" %} {% block title %} Add Job {% endblock %} {% block
+main %}
+<div class="section" id="add_job_form">
+  <h2>Add a Job</h2>
+  <br />
+  <form action="/add_job" method="POST">
+    {% for item in form_items %} {% if item["name"] == "commute" %}
+    <div class="mb-3">
+      <label for="{{ item['name'] }}">{{ item['placeholder'] }}:</label>
+      <select class="form-control" name="{{ item['name'] }}">
+        <option class="option" value="" selected>--Select an option--</option>
+        {% for c in commute %}
+        <option class="option" value="{{ c }}">{{ c }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% elif item["name"] == "title" or item["name"] == "company"%}
+    <div class="mb-3">
+      <label>{{ item["placeholder"] }}</label>
+      <input
+        type="text"
+        class="form-control"
+        id="{{ item['name'] }}"
+        name="{{ item['name'] }}"
+        required
+        autocomplete="off" />
+    </div>
+
+    {% elif item["name"] == "job_type" %}
+    <div class="mb-3">
+      <label for="{{ item['name'] }}">{{ item['placeholder'] }}</label>
+      <select class="form-control" name="{{ item['name'] }}">
+        <option class="option" value="" selected>--Select an option--</option>
+        {% for job_type in job_types %}
+        <option class="option" value="{{ job_type }}">{{ job_type }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% elif item["name"] == "description" %}
+    <div class="mb-3">
+      <label for="{{ item['name'] }}"> {{ item['placeholder'] }}</label>
+      <textarea
+        class="form-control"
+        name="{{ item['name'] }}"
+        placeholder="Copy and paste the job description here"
+        rows="4"
+        cols="50"></textarea>
+    </div>
+
+    {% elif item["name"] == "status" %}
+    <div class="mb-3">
+      <label for="{{ item['name'] }}">Current Status</label>
+      <select class="form-control" name="status" required>
+        <option class="option" value="" selected>--Select an option--</option>
+        {% for status in statuses %}
+        <option class="option" value="{{ status }}">{{ status }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% elif item["name"] == "date_posted" or item["name"] == "date_applied"%}
+    <div class="mb-3">
+      <label for="{{ item['name'] }}">{{ item['placeholder'] }}</label>
+      <input class="form-control" type="date" name="{{ item['name'] }}" />
+    </div>
+
+    {% elif item["name"] == "job_link"%}
+    <div class="mb-3">
+      <label>{{ item["placeholder"] }}</label>
+      <input
+        class="form-control"
+        autocomplete="off"
+        name="{{ item['name'] }}"
+        type="text" />
+      <!--<button>Autofill</button>-->
+    </div>
+
+    {% else %}
+    <div class="mb-3">
+      <label>{{ item["placeholder"] }}</label>
+      <input
+        class="form-control"
+        autocomplete="off"
+        name="{{ item['name'] }}"
+        type="text" />
+    </div>
+
+    {% endif %} {% endfor %}
+    <button class="btn btn-primary" type="submit">Add Job</button>
+  </form>
+</div>
+{% endblock %}
